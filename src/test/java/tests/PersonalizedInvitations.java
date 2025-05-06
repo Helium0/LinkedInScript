@@ -26,8 +26,8 @@ public class PersonalizedInvitations {
     public void multiple() throws InterruptedException, FileNotFoundException {
         Date date = new Date();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("user-data-dir=C:\\Users\\patry\\AppData\\Local\\Google\\Chrome\\User Data");
-        options.addArguments("profile-directory=Profile 22");
+        options.addArguments("user-data-dir=C:\\Users\\patry\\AppData\\Local\\Google\\Chrome\\User Data"); // ustawienie sesji przeglądarki
+        options.addArguments("profile-directory=Profile 22"); // ustawienie profilu z któego można pobrać dane 
         String automatDate = date.toString().replace("-", "").replace(":", "_");
         WebDriver driver = DriverFactory.getBrowser("chrome", options);
         DriverManagement.setDriver(driver);
