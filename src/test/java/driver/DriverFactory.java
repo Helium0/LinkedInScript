@@ -9,9 +9,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class DriverFactory {
 
 
-    public static WebDriver getBrowser(String browserName, ChromeOptions options) {
+    public static WebDriver getBrowser(String browserName, ChromeOptions browserOptions) {
         return switch (browserName.toLowerCase()) {
-            case "chrome" -> new ChromeDriver(options);
+            case "chrome" -> new ChromeDriver(browserOptions);
             case "firefox" -> new FirefoxDriver();
             case "edge" -> new EdgeDriver();
             default -> throw new RuntimeException("This browser doesn`t exist. Please write correct one");
