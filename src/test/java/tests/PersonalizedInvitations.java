@@ -8,6 +8,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+import projectHelper.AdditionalBrowserOptions;
+import projectHelper.GenerateDate;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -24,12 +26,8 @@ public class PersonalizedInvitations {
 
     @Test
     public void multiple() throws InterruptedException, FileNotFoundException {
-        Date date = new Date();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("user-data-dir=C:\\Users\\patry\\AppData\\Local\\Google\\Chrome\\User Data"); // ustawienie sesji przeglądarki
-        options.addArguments("profile-directory=Profile 22"); // ustawienie profilu z któego można pobrać dane 
-        String automatDate = date.toString().replace("-", "").replace(":", "_");
-        WebDriver driver = DriverFactory.getBrowser("chrome", options);
+        String date = GenerateDate.actuallDate();
+        WebDriver driver = DriverFactory.getBrowser("chrome", AdditionalBrowserOptions.browserArguments());
         DriverManagement.setDriver(driver);
         driver = DriverManagement.getDriver();
         driver.get("https://www.linkedin.com/");
@@ -41,7 +39,7 @@ public class PersonalizedInvitations {
         webDriverWait.until(ExpectedConditions.presenceOfElementLocated(ALL_PERSONS_BUTTON)).click();
         webDriverWait.until(ExpectedConditions.presenceOfElementLocated(PERSONS_LIST));
         PrintWriter write = new PrintWriter("invited_persons.txt");
-        write.println("Wysłanie spersonalizowanych zaproszeń w dniu: "+automatDate);
+        write.println("Wysłanie spersonalizowanych zaproszeń w dniu: "+date);
         List<WebElement> persons = driver.findElements(By.xpath("//ul[@role='list']//li"));
         int invitations = 1;
         for (int i = 0; i <= persons.size(); i++) {
@@ -71,13 +69,13 @@ public class PersonalizedInvitations {
 
                         WebElement text = driver.findElement(By.id("custom-message"));
                         text.sendKeys("Hej " + user.getText() + "\n" +
-                                "przesyłam tę wiadomość w dniu: " + automatDate + "\n" +
+                                "przesyłam tę wiadomość w dniu: " + date + "\n" +
                                 "Używając skryptu w Java/Selenium, " +
                                 "moim celem było zautomatyzowanie wysyłania spersonalizowanych zaproszeń =)");
 //                        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@aria-label='Wyślij zaproszenie']"))).click();
                         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@aria-label='Odrzuć']"))).click();
                         write.println("Zaproszenie "+invitations+" wysłane =)");
-                        if (invitations == 5) {
+                        if (invitations == 3) {
                             break;
                         }
 
