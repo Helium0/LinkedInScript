@@ -1,13 +1,11 @@
 package pages;
 
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import projectHelper.WaitsGenerator;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class PersonsFinderPage {
@@ -20,6 +18,13 @@ public class PersonsFinderPage {
 
     @FindBy(xpath = "//ul[@role='list']//li")
     private List<WebElement> personsList;
+
+    @FindBy(xpath = "//button[@aria-label='Dalej']")
+    private WebElement nextPageButton;
+
+    @FindBy(xpath = ".//span[text()='Nawiąż kontakt']")
+    private WebElement connectionButton;
+
 
 
     public List<WebElement> getPersonsList() {
@@ -39,6 +44,15 @@ public class PersonsFinderPage {
 
     public void personsListWebelements() {
         WaitsGenerator.waitForWebElements(driver,personsList);
+    }
+
+    public void clickOnNextPageButton() {
+        nextPageButton.click();
+    }
+
+    public AdditionalUserMessagePage clickToMakeConnectionWithPerson() {
+        connectionButton.click();
+        return new AdditionalUserMessagePage(driver);
     }
 
 
