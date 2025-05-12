@@ -4,6 +4,7 @@ import driver.DriverManagement;
 import driver.MainManagement;
 import org.openqa.selenium.*;
 import org.testng.annotations.Test;
+import pages.AdditionalUserMessagePage;
 import pages.NavigatorBarPage;
 import pages.PersonsFinderPage;
 import projectHelper.WaitsGenerator;
@@ -15,6 +16,7 @@ public class FriendInvitations extends MainManagement {
     private int page = 1;
     private NavigatorBarPage navigatorBarPage;
     private PersonsFinderPage personsFinderPage;
+    private AdditionalUserMessagePage additionalUserMessagePage;
     private final String TEXT_IN_SEARCH_BAR = "it hr";
     private final By LOC = By.xpath(".//span[@dir='ltr']/span[@aria-hidden='true']");
     private By PAGE = By.xpath("//li[@data-test-pagination-page-btn='" + page + "']//span");
@@ -27,6 +29,7 @@ public class FriendInvitations extends MainManagement {
         WebDriver driver = DriverManagement.getDriver();
         navigatorBarPage = new NavigatorBarPage(driver);
         personsFinderPage = new PersonsFinderPage(driver);
+        additionalUserMessagePage = new AdditionalUserMessagePage(driver);
         navigatorBarPage.typeTextInToSearchBar(TEXT_IN_SEARCH_BAR);
         navigatorBarPage.clickToExpandAllPersons();
         personsFinderPage.clickOnAllPersonsButton(driver);
@@ -45,16 +48,17 @@ public class FriendInvitations extends MainManagement {
                         System.out.println("Nazwa uzytkownika: " + user.getText());
                         System.out.println("Tagi uzytkownika: " + userBar.getText());
                         try {
-                            WebElement contactButton = element.findElement(By.xpath(".//span[text()='Nawiąż kontakt']"));
-                            contactButton.click();
+//                            WebElement contactButton = element.findElement(By.xpath(".//span[text()='Nawiąż kontakt']"));
+//                            contactButton.click();
+                                personsFinderPage.clickToMakeConnectionWithPerson();
 //                        WaitsGenerator.waitForElementByXpath(driver,By.xpath("//span[text()='Wyślij bez notatki']")).click();
-                            if (driver.findElement(By.xpath("//button[@aria-label='Wyślij bez notatki']")).isEnabled() != enabledButton) {
+                            if (additionalUserMessagePage.noteButton().isEnabled() != enabledButton) {
                                 System.out.println("Nie mozna wyslac zaproszenia przycisk nieaktywny");
-                                WaitsGenerator.waitForElementByXpath(driver, By.xpath("//button[@aria-label='Odrzuć']")).click();
+                                WaitsGenerator.waitForElement(driver, additionalUserMessagePage.clickOnCancelButton()).click();
 
                             } else {
                                 invitations += 1;
-                                WaitsGenerator.waitForElementByXpath(driver, By.xpath("//button[@aria-label='Odrzuć']")).click();
+                                WaitsGenerator.waitForElement(driver, additionalUserMessagePage.clickOnCancelButton()).click();
                                 System.out.println("Wyslano zaproszenie do: " + user.getText() + " | " + invitations);
                                 if (invitations == 200) {
                                     break;
@@ -72,7 +76,7 @@ public class FriendInvitations extends MainManagement {
                 if (invitations == 200) {
                     break;
                 } else {
-                    driver.findElement(By.xpath("//button[@aria-label='Dalej']")).click();
+                    personsFinderPage.clickOnNextPageButton();
                     WaitsGenerator.waitForElementByXpath(driver, PAGE);
                 }
                 page += 1;
