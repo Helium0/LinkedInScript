@@ -27,4 +27,8 @@ public class WaitsGenerator {
         return waitMethod(driver).until(ExpectedConditions.visibilityOfAllElements(elements));
     }
 
+    public static WebElement waitForVisibilityElement(WebDriver driver, WebElement element) {
+        return waitMethod(driver).until(ExpectedConditions.visibilityOf(element));
+    }
+
 }
