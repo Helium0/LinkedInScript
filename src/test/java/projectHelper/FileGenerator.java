@@ -6,8 +6,8 @@ import java.io.PrintWriter;
 public class FileGenerator {
 
 
-    public static PrintWriter writerFile() throws FileNotFoundException {
-        return new PrintWriter("invited_persons.txt");
+    public static PrintWriter writerFile(String text) throws FileNotFoundException {
+        return new PrintWriter(text);
     }
 
 

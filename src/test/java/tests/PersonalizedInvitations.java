@@ -14,7 +14,7 @@ import projectHelper.WaitsGenerator;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.Duration;
-import java.util.List;
+
 
 public class PersonalizedInvitations {
 
@@ -38,16 +38,15 @@ public class PersonalizedInvitations {
         navigatorBarPage.clickToExpandAllPersons();
         WaitsGenerator.waitForElementByXpath(driver,ALL_PERSONS_BUTTON).click();
         WaitsGenerator.waitForElementByXpath(driver,PERSONS_LIST);
-        PrintWriter write = FileGenerator.writerFile();
+        PrintWriter write = FileGenerator.writerFile(date+"_personalizedInvitations.txt");
         write.println("Wysłanie spersonalizowanych zaproszeń w dniu: "+date);
-        List<WebElement> persons = driver.findElements(By.xpath("//ul[@role='list']//li"));
 
-        for (int i = 0; i <= persons.size(); i++) {
+        for (int i = 0; i <= personsFinderPage.getPersonsList().size(); i++) {
             try {
 
                 webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//span[@dir='ltr']/span[@aria-hidden='true']")));
                 Thread.sleep(500);
-                WebElement element = persons.get(i);
+                WebElement element = personsFinderPage.getPersonsList().get(i);
                 WebElement user = element.findElement(By.xpath(".//span[@dir='ltr']/span[@aria-hidden='true']"));
                 WebElement userBar = element.findElement(By.xpath(".//div[contains(@class,'t-14 t-black')]"));
                 write.println("\n");

@@ -48,10 +48,7 @@ public class FriendInvitations extends MainManagement {
                         System.out.println("Nazwa uzytkownika: " + user.getText());
                         System.out.println("Tagi uzytkownika: " + userBar.getText());
                         try {
-//                            WebElement contactButton = element.findElement(By.xpath(".//span[text()='Nawiąż kontakt']"));
-//                            contactButton.click();
                                 personsFinderPage.clickToMakeConnectionWithPerson();
-//                        WaitsGenerator.waitForElementByXpath(driver,By.xpath("//span[text()='Wyślij bez notatki']")).click();
                             if (additionalUserMessagePage.noteButton().isEnabled() != enabledButton) {
                                 System.out.println("Nie mozna wyslac zaproszenia przycisk nieaktywny");
                                 WaitsGenerator.waitForElement(driver, additionalUserMessagePage.clickOnCancelButton()).click();
@@ -86,10 +83,6 @@ public class FriendInvitations extends MainManagement {
 
         }
         System.out.println("Wysłano: "+invitations+" zaproszen do znajomych");
-
-
-
-
 
     }
 
